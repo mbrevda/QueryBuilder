@@ -1,0 +1,28 @@
+{
+    "name": "mbrevda/query-builder",
+    "description": "Simple query builder wrapping Aura SqlQuery",
+    "authors": [
+        {
+            "name": "Moshe Brevda",
+            "email": "mbrevda@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "mbrevda/specification-query-interface": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mbrevda\\QueryBuilder\\": "src/",
+            "Mbrevda\\QueryBuilder\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit -c tests/phpunit.xml"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "process-timeout": 30
+    }
+}
