@@ -2,9 +2,9 @@
 
 namespace Mbrevda\QueryBuilder\Operators;
 
-use \Mbrevda\QueryBuilder\Query;
+use \Mbrevda\QueryBuilder\CompositeQuery;
 
-class Unequal extends Query
+class Unequal extends CompositeQuery
 {
     protected $field;
     protected $value;
@@ -17,7 +17,7 @@ class Unequal extends Query
         return $this;
     }
 
-    public function toString()
+    public function asSql($query)
     {
         return $this->field . ' <> ' . $this->value;
     }

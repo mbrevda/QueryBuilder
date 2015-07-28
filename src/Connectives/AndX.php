@@ -2,9 +2,9 @@
 
 namespace Mbrevda\QueryBuilder\Connectives;
 
-use \Mbrevda\QueryBuilder\Query;
+use \Mbrevda\QueryBuilder\CompositeQuery;
 
-class AndX extends Query
+class AndX extends CompositeQuery
 {
     protected $specification1;
     protected $specification2;
@@ -19,17 +19,19 @@ class AndX extends Query
         return $this;
     }
 
-    public function toString()
+    public function asSql($query)
     {
-        $one = $this->specification1->toString();
+        $one = $this->specification1->asSql($query);
         $two = $this->specification2
-            ? $this->specification2->toString()
+            ? $this->specification2->asSql($query)
             : null;
 
         if ($one && $two) {
             return '(' . $one . ' AND ' . $two . ')';
         }
 
-        return ' AND ' . $one;
+        if ($one || $two) {
+            return  ($one ? $one : $two);
+        }
     }
 }

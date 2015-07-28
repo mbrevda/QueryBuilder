@@ -9,7 +9,7 @@ use \Mbrevda\QueryBuilder\Connectives\Not;
 use \Mbrevda\QueryBuilder\Operators\Equals;
 use \Mbrevda\QueryBuilder\Operators\Unequal;
 
-abstract class Query //implements SpecificationQueryInterface
+class CompositeQuery //implements SpecificationQueryInterface
 {
     public function andX($specification1, $specification2)
     {
@@ -40,5 +40,8 @@ abstract class Query //implements SpecificationQueryInterface
     {
         return $this;
     }
-    //abstract public function toString();
+    
+    public function asSql($query)
+    {
+    }
 }
