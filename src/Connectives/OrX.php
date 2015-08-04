@@ -6,20 +6,20 @@ use \Mbrevda\QueryBuilder\CompositeQuery;
 
 class OrX extends CompositeQuery
 {
-    protected $specification1;
-    protected $specification2;
-
-    public function __construct($specification1, $specification2)
+    protected $specs;
+    public $isTop = false;
+    public function __construct($specs)
     {
-        $this->specification1 = $specification1->selectSatisfying($this);
-        $this->specification2 = $specification2->selectSatisfying($this);
-
-        return $this;
+        $this->specs = $specs;
     }
+
 
     public function asSql($query)
     {
-        $one = $this->specification1->asSql($query);
+        return implode(' OR ', array_map(function($spec) use ($query){
+            return $spec->asSql($query);
+        }, $this->specs));
+        /*$one = $this->specification1->asSql($query);
         $two = $this->specification2
             ? $this->specification2->asSql($query)
             : null;
@@ -28,6 +28,6 @@ class OrX extends CompositeQuery
             return '(' . $one . ' OR ' . $two . ')';
         }
 
-        return ' OR ' . $one;
+        return ' OR ' . $one;*/
     }
 }

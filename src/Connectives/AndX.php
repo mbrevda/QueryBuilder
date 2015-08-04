@@ -6,20 +6,27 @@ use \Mbrevda\QueryBuilder\CompositeQuery;
 
 class AndX extends CompositeQuery
 {
-    protected $specification1;
-    protected $specification2;
+    protected $specs;
 
-    public function __construct($specification1, $specification2)
+    public function __construct($specs)
     {
-        $this->specification1 = $specification1->selectSatisfying($this);
-        $this->specification2 = $specification2->selectSatisfying($this);
-
-        return $this;
+        $this->specs = $specs;
     }
 
     public function asSql($query)
     {
-        $one = $this->specification1->asSql($query);
+        /*return implode(' AND ', array_map(function($spec) use ($query){
+            print_r(['andX asSql' => $query]);
+            $rv = $spec->asSql($query);
+            print_r(['rv' => $rv]);
+            return $rv;
+        }, $this->specs));*/
+        $and = [];
+        foreach ($this->specs as $spec) {
+            $and[] = $spec->asSql($query);
+        }
+        return implode(' AND ', $and);
+        /*$one = $this->specification1->asSql($query);
         $two = $this->specification2
             ? $this->specification2->asSql($query)
             : null;
@@ -30,6 +37,6 @@ class AndX extends CompositeQuery
 
         if ($one || $two) {
             return  ($one ? $one : $two);
-        }
+        }*/
     }
 }
